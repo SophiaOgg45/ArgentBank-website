@@ -1,46 +1,60 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { infoUserName } from '../redux/authSlice'; // Vérifiez l'import correct
+import { useNavigate } from 'react-router-dom';
+import { infoUserName } from '../redux/authSlice';
 import { changeUsername } from '../core/api';
+import Button from '../components/Button';
 
 const EditUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const token = useSelector((state) => state.auth.token);
 
-  const [newUsername, setNewUsername] = useState('');
+  // Récupérer les informations d'authentification depuis le store Redux
+  const { user, token } = useSelector((state) => state.auth);
+
+  const [newUsername, setNewUsername] = useState(user?.username || '');
+  const [error, setError] = useState('');
 
   const handleChangeUsername = (e) => {
     setNewUsername(e.target.value);
   };
 
-  const handleSave = async (e) => {
+  const handleCancel = () => {
+    navigate("/profile");
+  };
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    // Vérifier la présence du token
+    if (!token) {
+      console.error('Token manquant');
+      setError('Token manquant');
+      return;
+    }
+
     try {
       const response = await changeUsername(newUsername, token);
       if (response.status === 200) {
-        // Mettre à jour le store Redux et localStorage si nécessaire
         dispatch(infoUserName(newUsername));
-        localStorage.setItem('username', newUsername);
+        console.log("Le nom d'utilisateur a bien été modifié.", response.status);
         navigate('/profile');
       } else {
-        console.error('La mise à jour du nom d\'utilisateur a échoué.');
+        console.error("La mise à jour du nom d'utilisateur a échoué.");
+        setError("La mise à jour du nom d'utilisateur a échoué.");
       }
     } catch (error) {
       console.error('Erreur lors de la mise à jour du nom d\'utilisateur :', error);
-      // Gérer l'affichage d'un message d'erreur à l'utilisateur
+      setError('Erreur lors de la mise à jour du nom d\'utilisateur : ' + error.message);
     }
   };
-  
 
   return (
     <main className="main bg-dark">
       <section className="sign-in-content toogle-edit-name">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Edit User info</h1>
-        <form onSubmit={handleSave} onClick={(event) => event.stopPropagation()}>
+        <form onSubmit={handleFormSubmit}>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
             <input
@@ -48,30 +62,13 @@ const EditUser = () => {
               onChange={handleChangeUsername}
               type="text"
               id="username"
-              placeholder="Enter your new username"
+              placeholder="Tapez votre username"
             />
           </div>
-          <div className="input-wrapper">
-            <label htmlFor="firstname">First Name</label>
-            <input
-              type="text"
-              id="firstname"
-              disabled
-              value={user.firstName}
-            />
-          </div>
-          <div className="input-wrapper">
-            <label htmlFor="lastname">Last Name</label>
-            <input
-              type="text"
-              id="lastname"
-              disabled
-              value={user.lastName}
-            />
-          </div>
-          <button type="submit" className="sign-in-button">Save</button>
+          {error && <div className="error-message">{error}</div>}
+          <Button btnText={"Save"} className={"sign-in-button"} />
         </form>
-        <Link to="/profile" className="sign-in-button">Cancel</Link>
+        <Button btnText={"Cancel"} onClick={handleCancel} className={"sign-in-button"} />
       </section>
     </main>
   );

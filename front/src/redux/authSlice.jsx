@@ -1,3 +1,5 @@
+// authSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -5,6 +7,7 @@ const initialState = {
   status: 'idle',
   error: null,
   user: null,
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -15,6 +18,7 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.status = 'succeeded';
       state.user = action.payload;
+      state.token = action.payload.token;
       state.error = null;
     },
     loginFailure: (state, action) => {
@@ -29,12 +33,18 @@ const authSlice = createSlice({
       state.error = null;
     },
     infoUserName: (state, action) => {
-      state.user.username = action.payload; // Mettre à jour le nom d'utilisateur dans l'état global
+      state.user.username = action.payload;
+    },
+    changeUsernameRequest: (state, action) => {
+      // Optionnel : Gérer l'état pendant la modification du nom d'utilisateur
+    },
+    changeUsernameSuccess: (state, action) => {
+      state.user.username = action.payload.newUsername;
     },
   },
 });
 
-export const { loginSuccess, loginFailure, logout, infoUserName } = authSlice.actions;
+export const { loginSuccess, loginFailure, logout, infoUserName, changeUsernameRequest, changeUsernameSuccess } = authSlice.actions;
 
 export default authSlice.reducer;
 

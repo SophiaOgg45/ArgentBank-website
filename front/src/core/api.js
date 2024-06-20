@@ -19,21 +19,31 @@ export async function getUserProfile(token) {
   return response.json();
 }
 
-  // Requête pour la modification du Username
-  export async function changeUsername(newUserName, token) {
-    const response = await fetch("http://localhost:3001/api/v1/user/profile", {
-      method: "PUT",
+
+
+ // Requette pour la modification du Username
+
+// ../core/api.js
+
+export async function changeUsername(newUsername, token) {
+  try {
+    const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+      method: 'PUT',
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ userName: newUserName }),
+      body: JSON.stringify({ userName: newUsername }),
     });
-  
+
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error('Failed to update username');
     }
-  
+
     return response.json();
+  } catch (error) {
+    throw new Error(`Error updating username: ${error.message}`);
   }
-  
+}
+
+
