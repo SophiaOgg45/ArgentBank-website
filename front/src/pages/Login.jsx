@@ -41,6 +41,7 @@ const Login = () => {
         }
 
         const userProfile = await getUserProfile(token);
+        userProfile.body.token = token;
         dispatch(loginSuccess(userProfile.body));
         navigate('/profile'); // Redirection après connexion réussie
       } else {

@@ -10,9 +10,11 @@ const EditUser = () => {
   const dispatch = useDispatch();
 
   // Récupérer les informations d'authentification depuis le store Redux
-  const { user, token } = useSelector((state) => state.auth);
+  const loginStore = useSelector((state) => state.auth);
+  const storeUserProfil = loginStore.user;
+  const token = loginStore.token;
 
-  const [newUsername, setNewUsername] = useState(user?.username || '');
+  const [newUsername, setNewUsername] = useState(storeUserProfil?.username || '');
   const [error, setError] = useState('');
 
   const handleChangeUsername = (e) => {
