@@ -1,5 +1,3 @@
-// authSlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -15,7 +13,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      console.log(action.payload)
       state.isAuthenticated = true;
       state.status = 'succeeded';
       state.user = action.payload;
@@ -25,7 +22,7 @@ const authSlice = createSlice({
     loginFailure: (state, action) => {
       state.isAuthenticated = false;
       state.status = 'failed';
-      state.error = action.payload;
+      state.error = action.payload.errorMessage || 'Login failed';
     },
     logout: (state) => {
       state.isAuthenticated = false;
@@ -34,18 +31,35 @@ const authSlice = createSlice({
       state.error = null;
     },
     infoUserName: (state, action) => {
-      state.user.username = action.payload;
+      if (state.user) {
+        state.user.username = action.payload;
+      }
     },
-    changeUsernameRequest: (state, action) => {
-      // Optionnel : Gérer l'état pendant la modification du nom d'utilisateur
+    changeUsernameRequest: (state) => {
+      state.status = 'loading';
     },
     changeUsernameSuccess: (state, action) => {
-      state.user.username = action.payload.newUsername;
+      console.log('Reducer: changeUsernameSuccess', action.payload); // Verify the data received in the action
+      state.status = 'succeeded';
+      if (state.user) {
+        state.user.userName = action.payload.newUsername; // Update username immutably
+      }
+    },
+    changeUsernameFailure: (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload.errorMessage || 'Failed to change username';
     },
   },
 });
 
-export const { loginSuccess, loginFailure, logout, infoUserName, changeUsernameRequest, changeUsernameSuccess } = authSlice.actions;
+export const {
+  loginSuccess,
+  loginFailure,
+  logout,
+  infoUserName,
+  changeUsernameRequest,
+  changeUsernameSuccess,
+  changeUsernameFailure,
+} = authSlice.actions;
 
 export default authSlice.reducer;
-

@@ -20,13 +20,11 @@ export async function getUserProfile(token) {
 }
 
 
-
- // Requette pour la modification du Username
-
-// ../core/api.js
-
 export async function changeUsername(newUsername, token) {
   try {
+    console.log('Starting username update process');
+    console.log('Attempting to change username to:', newUsername);
+
     const response = await fetch('http://localhost:3001/api/v1/user/profile', {
       method: 'PUT',
       headers: {
@@ -37,13 +35,21 @@ export async function changeUsername(newUsername, token) {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to update username');
+      let errorMessage = `Failed to update username. Status: ${response.status}`;
+      if (response.status === 401) {
+        errorMessage = 'Unauthorized: Please check your credentials.';
+      }
+      throw new Error(errorMessage);
     }
 
-    return response.json();
+    const data = await response.json();
+    console.log('Username updated successfully:', data);
+
+    // Assurez-vous de retourner les données pertinentes pour le composant EditUser
+    return data.body; // Retourne par exemple le corps de la réponse
+
   } catch (error) {
+    console.error('Failed to update username', error);
     throw new Error(`Error updating username: ${error.message}`);
   }
 }
-
-
