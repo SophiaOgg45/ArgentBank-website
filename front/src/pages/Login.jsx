@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginSuccess, loginFailure } from '../redux/authSlice';
 import { logUser, getUserProfile } from '../core/api';
+import './Login.scss';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');

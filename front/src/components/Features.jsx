@@ -6,6 +6,8 @@ import chatIcon from '../assets/img/icon-chat.png';
 import moneyIcon from '../assets/img/icon-money.png';
 import securityIcon from '../assets/img/icon-security.png';
 
+import './Features.scss';
+
 // Associer les noms d'images aux importations
 const images = {
   "icon-chat.png": chatIcon,

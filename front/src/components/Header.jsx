@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Logo from '../assets/img/argentBankLogo.png';
 import { logout } from '../redux/authSlice';
+import './Header.scss';
 
 const Header = () => {
   const dispatch = useDispatch();
