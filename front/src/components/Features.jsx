@@ -1,36 +1,28 @@
 import React from 'react';
-import featuresData from '../data/featuresData.json'; 
+import PropTypes from 'prop-types';
+import FeaturesData from './FeaturesData';
 
-// Importer les images 
-import chatIcon from '../assets/img/icon-chat.png';
-import moneyIcon from '../assets/img/icon-money.png';
-import securityIcon from '../assets/img/icon-security.png';
-
-import './Features.scss';
-
-// Associer les noms d'images aux importations
-const images = {
-  "icon-chat.png": chatIcon,
-  "icon-money.png": moneyIcon,
-  "icon-security.png": securityIcon
-};
-
-const Features = () => {
+const Features = ({ features }) => {
   return (
     <section className="features">
       <h2 className="sr-only">Features</h2>
-      {featuresData.map((feature) => (
-        <div key={feature.id} className="feature-item">
-          <img src={images[feature.image]} alt={feature.alt} className="feature-icon" />
-          <h3 className="feature-item-title">{feature.title}</h3>
-          <p>{feature.paragraph}</p>
-        </div>
+      {features.map((featureInfo) => (
+        <FeaturesData feature={featureInfo} />
       ))}
     </section>
   );
 };
 
+Features.propTypes = {
+  features: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      paragraph: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
 export default Features;
-
-
-
