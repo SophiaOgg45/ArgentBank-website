@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
-  title: Bank Argent API documentation
-  description: Contains all available API endpoints in this codebase
+  title: Documentation de l'API Bank Argent
+  description: Contient tous les endpoints disponibles dans cette base de code
   version: 1.0.0
   termsOfService: http://swagger.io/terms/
 host: localhost:3001
@@ -12,7 +12,7 @@ paths:
   /transactions/monthly:
     get:
       tags:
-        - Transaction Module
+        - Module Transaction
       summary: Récupérer toutes les transactions du mois en cours, groupées par compte
       description: >-
         API pour récupérer toutes les transactions de l'utilisateur pour le mois
@@ -37,7 +37,7 @@ paths:
   /transactions/{transactionId}:
     get:
       tags:
-        - Transaction Module
+        - Module Transaction
       summary: Récupérer les détails d'une transaction spécifique
       description: API pour récupérer les détails d'une transaction en fonction de son ID
       parameters:
@@ -57,7 +57,7 @@ paths:
           description: Erreur interne du serveur
     put:
       tags:
-        - Transaction Module
+        - Module Transaction
       summary: Modifier les informations d'une transaction
       description: API pour modifier les informations d'une transaction existante
       parameters:
@@ -81,6 +81,31 @@ paths:
           description: Champs invalides
         '404':
           description: Transaction non trouvée
+        '500':
+          description: Erreur interne du serveur
+  /accounts/{accountId}/transactions:
+    get:
+      tags:
+        - Module Transaction
+      summary: Récupérer toutes les transactions d'un compte spécifique
+      description: >-
+        API pour récupérer toutes les transactions associées à un compte
+        spécifique
+      parameters:
+        - in: path
+          name: accountId
+          type: integer
+          required: true
+          description: ID du compte
+      responses:
+        '200':
+          description: Transactions récupérées avec succès
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        '404':
+          description: Compte non trouvé
         '500':
           description: Erreur interne du serveur
 definitions:
