@@ -5,8 +5,8 @@ import AccountData from './AccountData'
 const Accounts = ({ accounts }) => {
   return (
     <>
-      {accounts.map((accountInfo) => (
-      <AccountData account={accountInfo} />
+      {accounts.map((accountInfo, index) => (  
+        <AccountData key={index} account={accountInfo} />
       ))}
     </>
   );

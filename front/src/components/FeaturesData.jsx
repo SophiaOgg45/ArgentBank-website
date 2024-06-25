@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Importer les images 
-import chatIcon from '../assets/img/icon-chat.png';
-import moneyIcon from '../assets/img/icon-money.png';
-import securityIcon from '../assets/img/icon-security.png';
+import chatIcon from '../assets/img/icon-chat.webp';
+import moneyIcon from '../assets/img/icon-money.webp';
+import securityIcon from '../assets/img/icon-security.webp';
 
 import './Features.scss';
 
@@ -18,11 +18,13 @@ const images = {
 const FeaturesData = ({ feature }) => {
     const { image, alt, title, paragraph } = feature;
     return (
+      
       <div className="feature-item">
         <img src={images[image]} alt={alt} className="feature-icon" />
         <h3 className="feature-item-title">{title}</h3>
         <p>{paragraph}</p>
       </div>
+     
     );
   };
   

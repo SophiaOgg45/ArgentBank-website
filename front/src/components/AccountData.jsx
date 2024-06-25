@@ -17,11 +17,12 @@ const AccountData = ({ account }) => {
 };
 
 AccountData.propTypes = {
-  id: PropTypes.shape({
+  account: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    paragraph: PropTypes.string.isRequired,
+    amount: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   }).isRequired,
 };
+
 
 export default AccountData;
