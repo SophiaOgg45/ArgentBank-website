@@ -45,8 +45,8 @@ export async function changeUsername(newUsername, token) {
     const data = await response.json();
     console.log('Username updated successfully:', data);
 
-    // Assurez-vous de retourner les données pertinentes pour le composant EditUser
-    return data.body; // Retourne par exemple le corps de la réponse
+    
+    return data.body; 
 
   } catch (error) {
     console.error('Failed to update username', error);

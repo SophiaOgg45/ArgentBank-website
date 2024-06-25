@@ -12,7 +12,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
-    // Ajoutez ici d'autres actions de nettoyage ou de redirection après la déconnexion si nécessaire
+   
   };
 
   return (

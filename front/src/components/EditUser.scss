@@ -1,0 +1,87 @@
+// Variables Sass pour les couleurs et les dimensions
+$primary-color: #007bff;
+$button-background: #f0f0f0;
+$input-border: 1px solid #ccc;
+$input-padding: 8px;
+$input-margin-bottom: 12px; 
+$label-color: #333;
+$error-color: #dc3545;
+
+
+.edit-user-info {
+  max-width: 200px; 
+  margin: 0 auto; 
+  padding-bottom: 1em;
+  
+  h2 {
+    font-size: 20px;
+    color: $primary-color; 
+    margin-bottom: 12px; 
+    font-weight: bolder;
+  }
+  
+  form {
+    .edit-input {
+      margin-bottom: $input-margin-bottom;
+      
+      label {
+        display: block;
+        color: $primary-color; 
+        margin-bottom: 6px; 
+        font-weight:bolder ;
+      }
+      
+      input {
+        width: 100%; 
+        padding: $input-padding;
+        border: $input-border;
+        border-radius: 4px;
+        box-sizing: border-box;
+        
+        &:disabled {
+          background-color: #eee;
+          color: #666;
+        }
+      }
+    }
+    
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+      
+      .edit-username-button {
+        padding: 8px 16px; 
+        background-color: $button-background;
+        border: none;
+        color: $primary-color; 
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        
+        &:hover {
+          background-color: lighten($button-background, 10%);
+        }
+        
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+        
+        &.cancel-button {
+          background-color: transparent;
+          color: $error-color;
+          
+          &:hover {
+            color: darken($error-color, 10%);
+          }
+        }
+      }
+    }
+    
+    .error-message {
+      color: $error-color;
+      margin-top: 10px;
+      font-size: 14px; 
+    }
+  }
+}

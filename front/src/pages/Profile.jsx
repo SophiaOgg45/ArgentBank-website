@@ -5,6 +5,7 @@ import Accounts from '../components/Accounts';
 import accountsData from '../data/accounts.json';
 import './Profile.scss';
 
+
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   const [editMode, setEditMode] = useState(false);
@@ -16,7 +17,7 @@ const Profile = () => {
 
   // Fonction pour mettre à jour le nom d'utilisateur dans Profile après la sauvegarde
   const updateUserName = (newUserName) => {
-    console.log('Updating username to:', newUserName);
+   
     setEditedUserName(newUserName);
     setEditMode(false); 
   };

@@ -9,7 +9,7 @@ import './Login.scss';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false); // État pour Remember Me
+  const [rememberMe, setRememberMe] = useState(false); 
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
   const authError = useSelector((state) => state.auth.error);
@@ -22,9 +22,9 @@ const Login = () => {
     if (storedEmail && storedPassword) {
       setEmail(storedEmail);
       setPassword(storedPassword);
-      setRememberMe(true); // Activer Remember Me si des données sont trouvées
+      setRememberMe(true); 
     }
-  }, []); // Effect déclenché une seule fois après le premier rendu
+  }, []); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ const Login = () => {
         // Si Remember Me est activé, enregistrer l'email dans localStorage
         if (rememberMe) {
           localStorage.setItem('email', email);
-          localStorage.setItem('password', password); // Note : Stocker le mot de passe dans localStorage n'est pas sécurisé.
+          localStorage.setItem('password', password); 
         } else {
           localStorage.removeItem('email');
           localStorage.removeItem('password');
@@ -45,7 +45,7 @@ const Login = () => {
         const userProfile = await getUserProfile(token);
         userProfile.body.token = token;
         dispatch(loginSuccess(userProfile.body));
-        navigate('/profile'); // Redirection après connexion réussie
+        navigate('/profile'); 
       } else {
         dispatch(loginFailure('Login failed'));
       }

@@ -39,10 +39,10 @@ const authSlice = createSlice({
       state.status = 'loading';
     },
     changeUsernameSuccess: (state, action) => {
-      console.log('Reducer: changeUsernameSuccess', action.payload); // Verify the data received in the action
+     
       state.status = 'succeeded';
       if (state.user) {
-        state.user.userName = action.payload.newUsername; // Update username immutably
+        state.user.userName = action.payload.newUsername;
       }
     },
     changeUsernameFailure: (state, action) => {
